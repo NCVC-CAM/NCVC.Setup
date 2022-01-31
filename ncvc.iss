@@ -1,9 +1,9 @@
 [Setup]
-OutputBaseFilename=ncvc388_install
+OutputBaseFilename=ncvc390_install
 AppName=NCVC
-AppVerName=NCVC Version 3.88
-AppVersion=3.88
-VersionInfoVersion=3.8.8.0
+AppVerName=NCVC Version 3.90
+AppVersion=3.90
+VersionInfoVersion=3.9.0.0
 VersionInfoDescription=NCVC setup program
 AppCopyright=MNCT-S K.Magara
 AppPublisher=MNCT-S
@@ -70,46 +70,18 @@ Source: "ncvc\Scriptorium\*"; DestDir: "{app}"; Components: Scriptorium; Flags: 
 Source: "ncvc\scripts\*"; DestDir: "{app}\scripts"; Components: SampleScripts; Flags: recursesubdirs
 
 [Code]
-#ifdef UNICODE
-  #define AW  "W"
-#else
-  #define AW  "A"
-#endif
-
-// Windows Installer API
-function MsiQueryProductState(szProduct: string): Longint;
-  external 'MsiQueryProductState{#AW}@msi.dll stdcall';
-
-// Product ID check
-function IsInstalled(const szProduct: string): boolean;
-var
-  status: Longint;
+function IsMFCregistry: boolean;
 begin
-  status := MsiQueryProductState(szProduct);
-  Result := status = 5; // INSTALLSTATE_DEFAULT?
+  Result := RegValueExists(HKEY_CLASSES_ROOT, 'Installer\Dependencies\Microsoft.VS.VC_RuntimeMinimumVSU_x86,v14', 'Version');
 end;
 
 procedure CurStepChanged(CurStep: TSetupStep);
 var
   ResultCode: Integer;
-  i: Integer;
-  pid: array[1..3] of string;
 
 begin
   if ( CurStep = ssPostInstall ) then begin
-    // vcredist_x86 Product ID
-    // x86 "HKEY_CLASSES_ROOT\Installer\Dependencies\Microsoft.VS.VC_RuntimeMinimumVSU_x86,v14"
-    pid[1] := '{BBF2AC74-720C-3CB3-8291-5E34039232FA}';
-    pid[2] := '{2E72FA1F-BADB-4337-B8AE-F7C17EC57D1D}';
-    pid[3] := '{6236EBBD-F50F-40B3-B819-8DB0C608308C}';
-    ResultCode := 0;
-    for i := 1 to 3 do begin
-      if IsInstalled(pid[i]) then begin
-        ResultCode := 1;
-        break;
-      end;
-    end;
-    if ( ResultCode <> 1 ) then begin
+    if not IsMFCregistry() then begin
       if MsgBox('NCVC実行に必要なMFCﾗﾝﾀｲﾑをインストールしますか？', mbConfirmation, MB_YESNO) = IDYES then begin
         ExtractTemporaryFile('vcredist_x86.exe');
         Exec(ExpandConstant('{tmp}\vcredist_x86.exe'), '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);

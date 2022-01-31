@@ -1,9 +1,9 @@
 [Setup]
-OutputBaseFilename=ncvc388_install64
+OutputBaseFilename=ncvc390_install64
 AppName=NCVC
-AppVerName=NCVC Version 3.88 (64bit Ver)
-AppVersion=3.88
-VersionInfoVersion=3.8.8.0
+AppVerName=NCVC Version 3.90 (64bit Ver)
+AppVersion=3.90
+VersionInfoVersion=3.9.0.0
 VersionInfoDescription=NCVC setup program
 AppCopyright=MNCT-S K.Magara
 AppPublisher=MNCT-S
@@ -72,44 +72,18 @@ Source: "ncvc\Scriptorium\*"; DestDir: "{app}"; Components: Scriptorium; Flags: 
 Source: "ncvc\scripts\*"; DestDir: "{app}\scripts"; Components: SampleScripts; Flags: recursesubdirs
 
 [Code]
-#ifdef UNICODE
-  #define AW  "W"#else
-  #define AW  "A"
-#endif
-
-// Windows Installer API
-function MsiQueryProductState(szProduct: string): Longint;
-  external 'MsiQueryProductState{#AW}@msi.dll stdcall';
-// Product ID check
-function IsInstalled(const szProduct: string): boolean;
-var
-  status: Longint;
+function IsMFCregistry: boolean;
 begin
-  status := MsiQueryProductState(szProduct);
-  Result := status = 5; // INSTALLSTATE_DEFAULT?
+  Result := RegValueExists(HKEY_CLASSES_ROOT, 'Installer\Dependencies\Microsoft.VS.VC_RuntimeMinimumVSU_amd64,v14', 'Version');
 end;
 
 procedure CurStepChanged(CurStep: TSetupStep);
 var
   ResultCode: Integer;
-  i: Integer;
-  pid: array[1..3] of string;
 
 begin
   if ( CurStep = ssPostInstall ) then begin
-    // vcredist_x64 Product ID
-    // x64 "HKEY_CLASSES_ROOT\Installer\Dependencies\Microsoft.VS.VC_RuntimeMinimumVSU_amd64,v14"
-    pid[1] := '{50A2BC33-C9CD-3BF1-A8FF-53C10A0B183C}';
-    pid[2] := '{7DC387B8-E6A2-480C-8EF9-A6E51AE81C19}';
-    pid[3] := '{EECDD137-13DA-46ED-ADA0-BDF7F8BE65B8}';
-    ResultCode := 0;
-    for i := 1 to 3 do begin
-      if IsInstalled(pid[i]) then begin
-        ResultCode := 1;
-        break;
-      end;
-    end;
-    if ( ResultCode <> 1 ) then begin
+    if not IsMFCregistry() then begin
       if MsgBox('NCVC実行に必要なMFCﾗﾝﾀｲﾑをインストールしますか？', mbConfirmation, MB_YESNO) = IDYES then begin
         ExtractTemporaryFile('vcredist_x64.exe');
         Exec(ExpandConstant('{tmp}\vcredist_x64.exe'), '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
