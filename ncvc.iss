@@ -1,9 +1,9 @@
 [Setup]
-OutputBaseFilename=ncvc390_install
+OutputBaseFilename=ncvc391_install
 AppName=NCVC
-AppVerName=NCVC Version 3.90
-AppVersion=3.90
-VersionInfoVersion=3.9.0.0
+AppVerName=NCVC Version 3.91
+AppVersion=3.91
+VersionInfoVersion=3.9.1.0
 VersionInfoDescription=NCVC setup program
 AppCopyright=MNCT-S K.Magara
 AppPublisher=MNCT-S
@@ -32,7 +32,7 @@ Name: "SampleScripts"; Description: "サンプルスクリプト"; Types: full;
 Name: "desktopicon"; Description: "デスクトップにショートカットの作成"; GroupDescription: "アイコンの追加:"; Flags: unchecked
 
 [Files]
-Source: "vcredist_x86.exe"; Flags: dontcopy
+Source: "vc_redist.x86.exe"; Flags: dontcopy
 Source: "ncvc\NCVC.exe"; DestDir: "{app}"; Components: Main; Flags: ignoreversion
 Source: "ncvc\NCVC.pdf"; DestDir: "{app}"; Components: Manual;
 Source: "ncvc\NCVC2.pdf"; DestDir: "{app}"; Components: Manual;
@@ -71,20 +71,29 @@ Source: "ncvc\scripts\*"; DestDir: "{app}\scripts"; Components: SampleScripts; F
 
 [Code]
 function IsMFCregistry: boolean;
+var
+  DisplayName: String;
 begin
-  Result := RegValueExists(HKEY_CLASSES_ROOT, 'Installer\Dependencies\Microsoft.VS.VC_RuntimeMinimumVSU_x86,v14', 'Version');
+  if RegQueryStringValue(HKEY_CLASSES_ROOT, 'Installer\Dependencies\Microsoft.VS.VC_RuntimeMinimumVSU_x86,v14', 'DisplayName', DisplayName) then begin
+    if Pos('2022 X86', DisplayName) > 0 then begin
+      Result := true;
+    end else begin
+      Result := false;
+    end;
+  end else begin
+    Result := false;
+  end;
 end;
 
 procedure CurStepChanged(CurStep: TSetupStep);
 var
   ResultCode: Integer;
-
 begin
   if ( CurStep = ssPostInstall ) then begin
     if not IsMFCregistry() then begin
       if MsgBox('NCVC実行に必要なMFCﾗﾝﾀｲﾑをインストールしますか？', mbConfirmation, MB_YESNO) = IDYES then begin
-        ExtractTemporaryFile('vcredist_x86.exe');
-        Exec(ExpandConstant('{tmp}\vcredist_x86.exe'), '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+        ExtractTemporaryFile('vc_redist.x86.exe');
+        Exec(ExpandConstant('{tmp}\vc_redist.x86.exe'), '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
       end;
     end;
   end;
