@@ -42,6 +42,7 @@ Source: "ncvc\NCVC3.pdf"; DestDir: "{app}"; Components: Manual;
 Source: "ncvc\NCVC4.pdf"; DestDir: "{app}"; Components: Manual;
 Source: "ncvc\NCVC5.pdf"; DestDir: "{app}"; Components: Manual;
 Source: "ncvc\NCVC6.pdf"; DestDir: "{app}"; Components: Manual;
+Source: "ncvc\NCVC7.pdf"; DestDir: "{app}"; Components: Manual;
 Source: "ncvc\Init.nci"; DestDir: "{app}"; Components: Main; Flags: onlyifdoesntexist
 Source: "ncvc\Deep.nci"; DestDir: "{app}"; Components: Main; Flags: onlyifdoesntexist
 Source: "ncvc\Init.ncj"; DestDir: "{app}"; Components: Main; Flags: onlyifdoesntexist
@@ -109,6 +110,7 @@ Name: "{group}\旋盤データ生成解説書"; Filename: "{app}\NCVC3.pdf"
 Name: "{group}\ワイヤ放電加工機データ生成解説書"; Filename: "{app}\NCVC4.pdf"
 Name: "{group}\CADﾃﾞｰﾀの統合解説書"; Filename: "{app}\NCVC5.pdf"
 Name: "{group}\複数のワーク座標原点を処理する手順書"; Filename: "{app}\NCVC6.pdf"
+Name: "{group}\NURBS曲面の切削データ生成解説書"; Filename: "{app}\NCVC7.pdf"
 Name: "{group}\NCVCのアンインストール"; Filename: "{uninstallexe}"
 Name: "{userdesktop}\NCVC"; Filename: "{app}\NCVC.exe"; Tasks: desktopicon
 
@@ -124,13 +126,8 @@ Root: HKCR; Subkey: ".ncd"; ValueType: string; ValueName: ""; ValueData: "NC.Doc
 Root: HKCR; Subkey: "NC.Document"; ValueType: string; ValueName: ""; ValueData: "NC.Document"; Flags: uninsdeletekey
 Root: HKCU; Subkey: "Software\MNCT-S\NCVC"; Flags: uninsdeletekey
 
-[InstallDelete]
-Type: files; Name: "{app}\NCVC.pdf";
-Type: files; Name: "{app}\NCVC2.pdf";
-Type: files; Name: "{app}\NCVC3.pdf";
-Type: files; Name: "{app}\NCVC4.pdf";
-Type: files; Name: "{group}\Uninstall NCVC.lnk";
-Type: files; Name: "{app}\sample\*";
+;[InstallDelete]
+;Type: files; Name: "{app}\sample\*";
 
 ; *** Inno Setup version 4.2.2+ Japanese messages ***
 ;
