@@ -1,9 +1,9 @@
 [Setup]
-OutputBaseFilename=ncvc391_install64
+OutputBaseFilename=ncvc400_install64
 AppName=NCVC
-AppVerName=NCVC Version 3.91 (64bit Ver)
-AppVersion=3.91
-VersionInfoVersion=3.9.1.0
+AppVerName=NCVC Version 4.00 (64bit Ver)
+AppVersion=4.00
+VersionInfoVersion=4.0.0.0
 VersionInfoDescription=NCVC setup program
 AppCopyright=MNCT-S K.Magara
 AppPublisher=MNCT-S
@@ -68,7 +68,7 @@ Source: "ncvc\x64\ReadJW\*"; DestDir: "{app}"; Components: ReadJW; Flags: ignore
 Source: "ncvc\x64\ReadCSV\*"; DestDir: "{app}"; Components: ReadCSV; Flags: ignoreversion
 Source: "ncvc\x64\SendNCD\*"; DestDir: "{app}"; Components: SendNCD; Flags: ignoreversion
 Source: "ncvc\x64\SolveTSP\*"; DestDir: "{app}"; Components: SolveTSP; Flags: ignoreversion
-Source: "ncvc\Scriptorium\*"; DestDir: "{app}"; Components: Scriptorium; Flags: ignoreversion
+Source: "ncvc\x64\Scriptorium\*"; DestDir: "{app}"; Components: Scriptorium; Flags: ignoreversion
 Source: "ncvc\scripts\*"; DestDir: "{app}\scripts"; Components: SampleScripts; Flags: recursesubdirs
 
 [Code]
