@@ -1,9 +1,9 @@
 [Setup]
-OutputBaseFilename=ncvc415a_install64
+OutputBaseFilename=ncvc415b_install64
 AppName=NCVC
-AppVerName=NCVC Version 4.15a (64bit Ver)
-AppVersion=4.15a
-VersionInfoVersion=4.1.5.1
+AppVerName=NCVC Version 4.15b (64bit Ver)
+AppVersion=4.15b
+VersionInfoVersion=4.1.5.2
 VersionInfoDescription=NCVC setup program
 AppCopyright=MNCT-S K.Magara
 AppPublisher=MNCT-S
