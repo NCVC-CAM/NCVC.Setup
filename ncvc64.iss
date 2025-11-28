@@ -1,9 +1,9 @@
 [Setup]
-OutputBaseFilename=ncvc415b_install64
+OutputBaseFilename=ncvc420_install64
 AppName=NCVC
-AppVerName=NCVC Version 4.15b (64bit Ver)
-AppVersion=4.15b
-VersionInfoVersion=4.1.5.2
+AppVerName=NCVC Version 4.20 (64bit Ver)
+AppVersion=4.20
+VersionInfoVersion=4.2.0.0
 VersionInfoDescription=NCVC setup program
 AppCopyright=MNCT-S K.Magara
 AppPublisher=MNCT-S
@@ -75,10 +75,10 @@ Source: "ncvc\scripts\*"; DestDir: "{app}\scripts"; Components: SampleScripts; F
 [Code]
 function IsMFCregistry: boolean;
 var
-  DisplayName: String;
+  VersionNo: String;
 begin
-  if RegQueryStringValue(HKEY_CLASSES_ROOT, 'Installer\Dependencies\Microsoft.VS.VC_RuntimeMinimumVSU_amd64,v14', 'DisplayName', DisplayName) then begin
-    if Pos('2022 X64', DisplayName) > 0 then begin
+  if RegQueryStringValue(HKEY_LOCAL_MACHINE, 'SOFTWARE\WOW6432Node\Microsoft\VisualStudio\14.0\VC\Runtimes\x64', 'Version', VersionNo) then begin
+    if VersionNo >= 'v14.50.35719.00' then begin
       Result := true;
     end else begin
       Result := false;
