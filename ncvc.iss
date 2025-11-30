@@ -32,7 +32,7 @@ Name: "SampleScripts"; Description: "サンプルスクリプト"; Types: full;
 Name: "desktopicon"; Description: "デスクトップにショートカットの作成"; GroupDescription: "アイコンの追加:"; Flags: unchecked
 
 [Files]
-Source: "vc_redist.x86.exe"; Flags: dontcopy
+Source: "VC_redist.x86.exe"; Flags: dontcopy
 Source: "ncvc\NCVC.exe"; DestDir: "{app}"; Components: Main; Flags: ignoreversion
 Source: "ncvc\NCVC.pdf"; DestDir: "{app}"; Components: Manual;
 Source: "ncvc\NCVC2.pdf"; DestDir: "{app}"; Components: Manual;
@@ -93,8 +93,8 @@ begin
   if ( CurStep = ssPostInstall ) then begin
     if not IsMFCregistry() then begin
       if MsgBox('NCVC実行に必要なMFCﾗﾝﾀｲﾑをインストールしますか？', mbConfirmation, MB_YESNO) = IDYES then begin
-        ExtractTemporaryFile('vc_redist.x86.exe');
-        Exec(ExpandConstant('{tmp}\vc_redist.x86.exe'), '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
+        ExtractTemporaryFile('VC_redist.x86.exe');
+        Exec(ExpandConstant('{tmp}\VC_redist.x86.exe'), '', '', SW_SHOW, ewWaitUntilTerminated, ResultCode);
       end;
     end;
   end;
