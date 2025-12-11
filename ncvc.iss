@@ -1,9 +1,9 @@
 [Setup]
-OutputBaseFilename=ncvc420_install
+OutputBaseFilename=ncvc415c_install
 AppName=NCVC
-AppVerName=NCVC Version 4.20
-AppVersion=4.20
-VersionInfoVersion=4.2.0.0
+AppVerName=NCVC Version 4.15c
+AppVersion=4.15c
+VersionInfoVersion=4.1.5.3
 VersionInfoDescription=NCVC setup program
 AppCopyright=MNCT-S K.Magara
 AppPublisher=MNCT-S
@@ -25,6 +25,7 @@ Name: "ReadJW"; Description: "アドイン ReadJW"; Types: full;
 Name: "ReadCSV"; Description: "アドイン ReadCSV"; Types: full;
 Name: "SendNCD"; Description: "アドイン SendNCD"; Types: full;
 Name: "SolveTSP"; Description: "アドイン SolveTSP"; Types: full;
+Name: "GRBLc"; Description: "アドイン GRBLc"; Types: full;
 Name: "Scriptorium"; Description: "スクリプトラッパー"; Types: full;
 Name: "SampleScripts"; Description: "サンプルスクリプト"; Types: full;
 
@@ -67,6 +68,7 @@ Source: "ncvc\ReadJW\*"; DestDir: "{app}"; Components: ReadJW; Flags: ignorevers
 Source: "ncvc\ReadCSV\*"; DestDir: "{app}"; Components: ReadCSV; Flags: ignoreversion
 Source: "ncvc\SendNCD\*"; DestDir: "{app}"; Components: SendNCD; Flags: ignoreversion
 Source: "ncvc\SolveTSP\*"; DestDir: "{app}"; Components: SolveTSP; Flags: ignoreversion
+Source: "ncvc\GRBLc\*"; DestDir: "{app}"; Components: GRBLc; Flags: ignoreversion
 Source: "ncvc\Scriptorium\*"; DestDir: "{app}"; Components: Scriptorium; Flags: ignoreversion
 Source: "ncvc\scripts\*"; DestDir: "{app}\scripts"; Components: SampleScripts; Flags: recursesubdirs
 
